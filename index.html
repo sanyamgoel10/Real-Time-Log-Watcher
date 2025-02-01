@@ -1,0 +1,28 @@
+<html>
+<head></head>
+<body>
+    <p id="id01"></p>
+</body>
+</html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    let currArr = [];
+
+    var socket = io();
+    socket.on('connect', function () {
+        console.log('Connected to Server');
+    });
+    socket.on('newMessage', function (message) {
+        currArr = [...currArr, ...message];
+        let finalData = '';
+        for(let i in currArr){
+            finalData += currArr[i] + '<br>';
+        }
+        $('#id01').html(finalData);
+    });
+    socket.on('disconnect', function () {
+        console.log('Disconnected from server');
+    });
+</script>
